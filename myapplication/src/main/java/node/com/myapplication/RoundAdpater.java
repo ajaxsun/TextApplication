@@ -39,7 +39,6 @@ public class RoundAdpater extends RecyclerView.Adapter<RoundAdpater.ViewHolder> 
         viewHolder.tvTextView.setText(data.get(i).getTitle());
         Round_ViewAdapter round_viewAdapter = new Round_ViewAdapter(activity, data.get(i).getBean());
         viewHolder.mRecyclerView.setLayoutManager(new GridLayoutManager(activity, 4));
-//        viewHolder.mRecyclerView.addItemDecoration(new MarginDecoration());
         viewHolder.mRecyclerView.setAdapter(round_viewAdapter);
     }
 

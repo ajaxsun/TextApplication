@@ -1,53 +1,53 @@
 package node.com.myapplication;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    Button btnOnclick;
-    TextView tvContent;
-    DataViewModul dataViewModul;
+    RecyclerView mRecyclerView;
+    RoundAdpater roundAdpater;
 
-    int pos = 0;
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dataViewModul = new ViewModelProvider.NewInstanceFactory().create(DataViewModul.class);
-
-        btnOnclick = findViewById(R.id.btnOnclick);
-        tvContent = findViewById(R.id.tvContent);
-
-
-        Observer<String> observer = new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                tvContent.setText(s);
-            }
-        };
-        dataViewModul.getGetName().observe(this, observer);
-
-        btnOnclick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pos++;
-                dataViewModul.getGetName().postValue(pos + "");
-            }
-        });
-
+        mRecyclerView = findViewById(R.id.mRecyclerView);
+        roundAdpater = new RoundAdpater(this, getData());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(roundAdpater);
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+
+    private ArrayList<Data> getData() {
+        ArrayList<Data> dataArrayList = new ArrayList<>();
+        ArrayList<String> arrayList = new ArrayList<String>();
+        arrayList.add("美食");
+        arrayList.add("中餐");
+        arrayList.add("快餐");
+        arrayList.add("火锅");
+        arrayList.add("咖啡厅");
+        arrayList.add("肯德基");
+        arrayList.add("自助餐");
+        arrayList.add("小吃");
+        arrayList.add("蛋糕房");
+        dataArrayList.add(new Data.Builder().title("吃").bean(arrayList).build());
+        ArrayList<String> arrayList2 = new ArrayList<String>();
+        arrayList2.add("酒店");
+        arrayList2.add("快捷酒店");
+        arrayList2.add("冰棺");
+        arrayList2.add("青年旅社");
+        arrayList2.add("星际酒店");
+        arrayList2.add("旅馆");
+        arrayList2.add("主题酒店");
+        arrayList2.add("商务酒店");
+        arrayList2.add("快捷连锁");
+        dataArrayList.add(new Data.Builder().title("住").bean(arrayList2).build());
+
+        return dataArrayList;
     }
 }
